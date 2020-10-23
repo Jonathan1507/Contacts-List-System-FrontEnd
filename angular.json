@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "Contacts-List-System"
+    }
+  },
+  "defaultProject": "Contacts-List-System",
+  "cli": {
+    "analytics": "19ba452f-d1b4-4f2c-8047-74c83cf18ada"
+  }
 }
