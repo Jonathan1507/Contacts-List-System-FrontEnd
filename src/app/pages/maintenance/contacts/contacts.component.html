@@ -1,1 +1,95 @@
-<p>contacts works!</p>
+<br>
+<br>
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                
+                <input type="text"
+                    class="form-control"
+                    placeholder="Find contact..."/>
+
+            </div>
+        </div>
+    </div>
+</div> 
+
+<div class="row animated fadeIn fast" *ngIf="loading">
+    <div class="col-12">
+        
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Loading</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Please wait</p>
+        </div>
+
+    </div>
+</div> 
+
+
+<div class="row animate fadeIn fast" *ngIf="!loading">
+    <div class="col-12">
+        <div class="card">
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-8">
+                        <h4 class="card-title">Total users ()</h4>
+                        <h6 class="card-subtitle">Users registered in the system</h6>
+                    </div>
+                    <div class="col">
+                        <div class="text-right">
+                            <button class="btn btn-primary">
+                                <i class="fa fa-hospital-o"></i> Create Conatact
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Names</th>
+                                <th>Surnames</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th class="text-nowrap">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let contac of contacts">
+                                <td>
+                                    <input type="text" class="form-control" placeholder="Names" [(ngModel)]="contac.name"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" placeholder="Surnames" [(ngModel)]="contac.surnames">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" placeholder="Email" [(ngModel)]="contac.email">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" placeholder="Phone" [(ngModel)]="contac.phone">
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <a href="#" data-toggle="tooltip" 
+                                        data-original-title="Save changes"
+                                        class="cursor"> 
+                                        <i class="fa fa-pencil text-inverse m-r-10"></i> 
+                                    </a>
+                                    <a href="#" data-toggle="tooltip" data-original-title="Delete" class="cursor" (click)="deleteContact(contac)"> <i class="fa fa-close text-danger"></i> </a>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+                <button class="btn btn-secondary">Previous</button>
+                &nbsp;
+                <button class="btn btn-secondary">Following</button>
+
+            </div>
+        </div>
+    </div>
+</div>

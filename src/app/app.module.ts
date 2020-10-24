@@ -1,20 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+// Modules
+import { AppRoutingModule } from './app-routing.module';
+import { PagesModule } from './pages/pages.module';
+import { AuthModule } from './auth/auth.module';
+// Components
 import { AppComponent } from './app.component';
-import { ContactsComponent } from './pages/maintenance/contacts/contacts.component';
-import { UsersComponent } from './pages/maintenance/users/users.component';
-import { HeaderComponent } from './shared/header/header.component';
+import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ContactsComponent,
-    UsersComponent,
-    HeaderComponent
+    NopagefoundComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule,
+    PagesModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
