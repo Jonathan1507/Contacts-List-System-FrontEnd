@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { delay } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
 
 import { Contact } from '../../../models/contact.model';
-import { FormRegisterContact } from '../../../interfaces/register-contacts.interface';
 import { SearchService } from '../../../services/search.service';
 import { ContactsService } from '../../../services/contacts.service';
-import { async } from 'rxjs/internal/scheduler/async';
 
 @Component({
   selector: 'app-contacts',
@@ -21,10 +19,13 @@ export class ContactsComponent implements OnInit {
   contacts: Contact[] = [];
   temporaryContacts: Contact[] = [];
 
-  since: number = 0;
+  from: number = 0;
   loading: boolean = true;
 
-  constructor(private searchService: SearchService, private contactsService: ContactsService) { }
+  constructor(private router: Router,
+              private fb: FormBuilder,
+              private searchService: SearchService, 
+              private contactsService: ContactsService) { }
 
   ngOnInit(): void {
     this.loadingContact();
@@ -32,25 +33,14 @@ export class ContactsComponent implements OnInit {
 
   loadingContact(){
     this.loading = true;
-    this.contactsService.loadingContact()
-      .subscribe( contacts => {
-        this.loading = false;
+    this.contactsService.loadContact(this.from)
+      .subscribe( ({total, contacts}) => {
+        this.totalContact = total;
         this.contacts = contacts;
-    })
+        this.temporaryContacts = contacts;
+        this.loading = false;
+    });
   }
-/*
-  saveChanges(contact: Contact){
-    this.contactsService.updateContact(contact._id, contact.name, contact.surnames, contact.email, contact.phone)
-      .subscribe(resp => {
-        Swal.fire({
-          title: 'Updated',
-          text: contact.name,
-          icon: 'success',
-          confirmButtonText: 'Cerrar'
-        });
-      })
-  }
-*/
 
   deleteContact(contact: Contact){
     this.contactsService.deleteContact(contact._id)
@@ -62,6 +52,28 @@ export class ContactsComponent implements OnInit {
           icon: 'success',
           confirmButtonText: 'Cerrar'
         });
+      });
+  }
+
+  changePage(value: number){
+    this.from += value;
+
+    if (this.from < 0) {
+      this.from = 0;
+    }else if(this.from >= this.totalContact){
+      this.from -= value;
+    }
+    this.loadingContact();
+  }
+
+  search(finished: string){
+    if (finished.length === 0) {
+      return this.contacts = this.temporaryContacts;
+    }
+
+    this.searchService.search('contacts', finished)
+      .subscribe(results => {
+        this.contacts = results;
       });
   }
 

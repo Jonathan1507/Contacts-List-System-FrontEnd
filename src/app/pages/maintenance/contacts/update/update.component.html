@@ -1,0 +1,67 @@
+<br>
+<br>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Update contact</h4>
+                <form class="form p-t-20" 
+                    [formGroup]="formContact"
+                    (submit)="updateContact()">
+                    
+                    <div class="form-group">
+                        <label for="exampleInputuname">Name</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input type="text" 
+                                class="form-control" 
+                                id="exampleInputuname" 
+                                placeholder="User name"
+                                formControlName="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Surnames</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input type="text" 
+                                class="form-control" 
+                                id="exampleInputuname" 
+                                placeholder="Surnames"
+                                formControlName="surnames">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-email"></i></div>
+                            <input type="email" 
+                                class="form-control" 
+                                id="exampleInputEmail1" 
+                                placeholder="Email"
+                                formControlName="email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputuname">Phone</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-help"></i></div>
+                            <input type="text" 
+                                class="form-control" 
+                                id="exampleInputuname" 
+                                placeholder="Phone"
+                                formControlName="phone">
+                        </div>
+                    </div>
+
+                    <button type="submit" 
+                        class="btn btn-primary btn-block waves-effect waves-light m-r-10"
+                        [disabled]="formContact.invalid">
+                        <i class="fa fa-save"></i> Save Changes
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

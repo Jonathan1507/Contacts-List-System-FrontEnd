@@ -89,22 +89,6 @@ export class UsersService {
                         );
   }
 
-  loadUsers(since: number = 0){
-    const url = `${base_url}/usuarios?since=${since}`;
-    return this.http.get<LoadUser>(url, this.headers)
-            .pipe(
-              map( resp => {
-                const users = resp.users.map(
-                  user => new User(user.name, user.surnames, user.email, '', user.uid)
-                );
-                return {
-                  total: resp.total,
-                  users
-                };
-              })
-            );
-  }
-
   deleteUser(user: User){
     const url = `${base_url}/usuarios/${user.uid}`;
     return this.http.delete(url, this.headers);

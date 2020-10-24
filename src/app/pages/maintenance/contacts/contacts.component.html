@@ -4,10 +4,11 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                
                 <input type="text"
                     class="form-control"
-                    placeholder="Find contact..."/>
+                    placeholder="Find contact..."
+                    (keyup)="search(txtFinished.value)"
+                    #txtFinished/>
 
             </div>
         </div>
@@ -34,13 +35,13 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-8">
-                        <h4 class="card-title">Total users ()</h4>
+                        <h4 class="card-title">Total users  ({{totalContact}})</h4>
                         <h6 class="card-subtitle">Users registered in the system</h6>
                     </div>
                     <div class="col">
                         <div class="text-right">
-                            <button class="btn btn-primary">
-                                <i class="fa fa-hospital-o"></i> Create Conatact
+                            <button class="btn btn-primary" routerLink="./registerC">
+                                <i class="fa fa-hospital-o"></i> Create Contact
                             </button>
                         </div>
                     </div>
@@ -60,22 +61,23 @@
                         <tbody>
                             <tr *ngFor="let contac of contacts">
                                 <td>
-                                    <input type="text" class="form-control" placeholder="Names" [(ngModel)]="contac.name"/>
+                                    {{contac.name}}
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" placeholder="Surnames" [(ngModel)]="contac.surnames">
+                                    {{contac.surnames}}
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" placeholder="Email" [(ngModel)]="contac.email">
+                                    {{contac.email}}
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" placeholder="Phone" [(ngModel)]="contac.phone">
+                                    {{contac.phone}}
                                 </td>
                                 <td class="text-nowrap text-center">
                                     <a href="#" data-toggle="tooltip" 
                                         data-original-title="Save changes"
-                                        class="cursor"> 
-                                        <i class="fa fa-pencil text-inverse m-r-10"></i> 
+                                        class="cursor"
+                                        routerLink="./updateC"> 
+                                        <i class="fa fa-pencil text-inverse m-r-10"></i>
                                     </a>
                                     <a href="#" data-toggle="tooltip" data-original-title="Delete" class="cursor" (click)="deleteContact(contac)"> <i class="fa fa-close text-danger"></i> </a>
                                 </td>
@@ -85,10 +87,11 @@
                     </table>
                 </div>
 
-                <button class="btn btn-secondary">Previous</button>
-                &nbsp;
-                <button class="btn btn-secondary">Following</button>
-
+                <div *ngIf="txtFinished.value.length === 0">
+                    <button (click)="changePage(-10)" class="btn btn-secondary">Previous</button>
+                    &nbsp;
+                    <button (click)="changePage(10)" class="btn btn-secondary">Following</button>
+                </div>
             </div>
         </div>
     </div>

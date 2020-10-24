@@ -15,11 +15,15 @@ const base_url = environment.base_url;
 })
 export class ContactsService {
 
-
+  contact: Contact;
   constructor(private http: HttpClient){ }
 
   get token(): string{
     return localStorage.getItem('token') || '';
+  }
+
+  get _id():string{
+    return this.contact._id || '';
   }
 
   get headers(){
@@ -30,24 +34,35 @@ export class ContactsService {
     }
   }
 
-  loadingContact(since: number = 0){
-    const url = `${base_url}/contact?since=${since}`;
-    return this.http.get(url, this.headers)
-    .pipe(
-      map((resp: {ok: boolean, contacts: Contact[]}) => resp.contacts)
-    );
+  loadContact(from: number = 0){
+    const url = `${base_url}/contact?from=${from}`;
+    return this.http.get<LoadContacts>(url, this.headers)
+            .pipe(
+              map( resp => {
+                const contacts = resp.contacts.map(
+                  contc => new Contact(contc.name, contc.surnames, contc.email, contc.phone)
+                );
+                return {
+                  total: resp.total,
+                  contacts
+                };
+              })
+            );
   }
 
-  createContact(formData: FormRegisterContact){
+  createContact(data: FormRegisterContact){
     const url = `${base_url}/contact`;
-    return this.http.post(url, formData, this.headers);
+    return this.http.post(url, data, this.headers);
   }
 
- /* updateContact(_id: string, name: string, surnames: string, email: string, phone: string){
-    const url = `${base_url}/contact/${_id}`;
-    return this.http.put(url, {name} , this.headers);
+  updateContact(data: {name: string, surnames: string, email: string, phone: string}){
+    data = {
+      ...data
+    };
+
+    return this.http.put(`${base_url}/contact/${this._id}`, data, this.headers);
   }
-*/
+
   deleteContact(_id: string){
     const url = `${base_url}/contact/${_id}`;
     return this.http.delete(url, this.headers);

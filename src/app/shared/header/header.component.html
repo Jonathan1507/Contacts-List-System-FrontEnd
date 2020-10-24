@@ -7,8 +7,21 @@
                         {{user.surnames}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" (click)="signOff()" href="#">Salir</a>
+                        <a class="dropdown-item" 
+                        routerLink="./profile">
+                        <i class="ti-user"></i> 
+                        My profile
+                        </a>
+
+                        <a class="dropdown-item cursor" 
+                            (click)="signOff()">
+                            <i class="fa fa-power-off"></i>
+                            Sign off
+                        </a>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="./">Contacts</a>
                 </li>
             </ul>
         </div>
